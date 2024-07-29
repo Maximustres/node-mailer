@@ -1,0 +1,30 @@
+name: Deploy
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: git checkout
+        uses: actions/checkout@v2
+
+      #- name: Use Node.js
+      #  uses: actions/setup-node@v1
+      #  with:
+      #    node-version: '12.x'
+      #- run: npm install
+      #- run: npm run build --if-present
+
+      - name: Push imagen registry
+        uses: azure/docker-login@v1
+        with:
+          login-server: registry.digitalocean.com
+          username: ${{ secrets.REGISTRY_SECRET }}
+          password: ${{ secrets.REGISTRY_SECRET }}
+      - run: |
+          docker build . -t registry.digitalocean.com/landign-terapia-registry/mailer:main-latest
+          docker push registry.digitalocean.com/landign-terapia-registry/mailer:main-latest

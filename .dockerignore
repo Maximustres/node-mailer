@@ -1,0 +1,16 @@
+# Log files
+*.log
+
+# Node.js dependencies
+/node_modules
+
+# Environment variables
+.env
+
+# Git directory
+.git/
+
+# Development files
+.vscode/
+Dockerfile
+README.md
